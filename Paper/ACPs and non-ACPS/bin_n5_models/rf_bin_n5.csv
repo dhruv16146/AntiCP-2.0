@@ -1,0 +1,10 @@
+Accuracy: 0.50 ,Specificity: 0.00 ,Senstivity: 1.00 ,roc-auc scores: 0.75 ,mcc scores: 0.00 ,cohen scores: 0.00 Threshold: 0.00 
+Accuracy: 0.50 ,Specificity: 0.01 ,Senstivity: 1.00 ,roc-auc scores: 0.75 ,mcc scores: 0.05 ,cohen scores: 0.01 Threshold: 0.10 
+Accuracy: 0.53 ,Specificity: 0.07 ,Senstivity: 0.99 ,roc-auc scores: 0.75 ,mcc scores: 0.17 ,cohen scores: 0.06 Threshold: 0.20 
+Accuracy: 0.58 ,Specificity: 0.20 ,Senstivity: 0.95 ,roc-auc scores: 0.75 ,mcc scores: 0.23 ,cohen scores: 0.15 Threshold: 0.30 
+Accuracy: 0.63 ,Specificity: 0.40 ,Senstivity: 0.86 ,roc-auc scores: 0.75 ,mcc scores: 0.30 ,cohen scores: 0.26 Threshold: 0.40 
+Accuracy: 0.68 ,Specificity: 0.66 ,Senstivity: 0.70 ,roc-auc scores: 0.75 ,mcc scores: 0.36 ,cohen scores: 0.36 Threshold: 0.50 
+Accuracy: 0.63 ,Specificity: 0.87 ,Senstivity: 0.39 ,roc-auc scores: 0.75 ,mcc scores: 0.30 ,cohen scores: 0.26 Threshold: 0.60 
+Accuracy: 0.60 ,Specificity: 0.97 ,Senstivity: 0.22 ,roc-auc scores: 0.75 ,mcc scores: 0.29 ,cohen scores: 0.19 Threshold: 0.70 
+Accuracy: 0.57 ,Specificity: 1.00 ,Senstivity: 0.15 ,roc-auc scores: 0.75 ,mcc scores: 0.28 ,cohen scores: 0.15 Threshold: 0.80 
+Accuracy: 0.54 ,Specificity: 1.00 ,Senstivity: 0.08 ,roc-auc scores: 0.75 ,mcc scores: 0.21 ,cohen scores: 0.08 Threshold: 0.90 
