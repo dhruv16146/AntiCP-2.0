@@ -97,28 +97,25 @@ def load_models_run_test(option,root,X,Y):
     return [clf2.best_estimator_]
 
 
-line=input('input sequence: ')
-option1=input('choose b/w aac dpc bin: ')
-option2=input('choose b/w Normal, N, C, NC: ')
-option3=input('choose b/w aac/aac_nx/aac_cx/aac_ncx/bin_n5/bin_c5/bin_nc5 and so on: ')
-x=int(input('Enter N terminus value: '))
-y=int(input('Enter C terminus value: '))
-threshold=float(input('Enter threshold: '))
-experimental=input('Choose 0 for experimental and 1 for random: ')
+#Model1
+#DPC N5
+#AAC N5 
 
+Sequence=input('Enter the Sequence: ') 
+Model=input('choose model 1 / 2 Experimental/Random :') 
+Threshold=float(input('Enter the Threshold: '))
 
+if Model==1: 
+    root1='./ACPs and non-ACPS' 
+    X,Y=getXYforfeature(Sequence,'dpc','N',5,0) 
+    [clf]=load_models_run_test('dpc',root1,X,Y) 
+    Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
+    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',Y_pred,' | ','Score: ',Y_score)
 
-root1='./ACPs and non-ACPS'
-if experimental==0:
-    root1='./ACPs and non-ACPS'
-else:
-    root1='./ACPs and random peptides'
-X,Y=getXYforfeature(line,option1,option2,x,y)
-[clf]=load_models_run_test(option3,root1,X,Y)
-print("Belongs to :")
-t=Perform_testing(clf,'svm',X,Y,threshold)
+else: 
+    root1='./ACPs and random peptides' 
+    X,Y=getXYforfeature(Sequence,'aac','Normal',0,0) 
+    [clf]=load_models_run_test('aac',root1,X,Y) 
+    Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
+    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',Y_pred,' | ','Score: ',Y_score)
 
-if t[0]==-1:
-    print("Negative Class")
-else:
-    print("Positive Class")
