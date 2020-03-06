@@ -24,6 +24,7 @@ import warnings
 from sklearn.metrics import fbeta_score, make_scorer
 import os
 import sys
+import joblib
 warnings.filterwarnings('ignore')
 
 def getVector(line,option1,option2,x=None,y=None):
@@ -53,7 +54,7 @@ def Perform_testing(clf,name,X,Y,t):
     else:
         Y_scores=clf.predict_proba(X)[:,1]
     Y_pred = adjusted_classes(Y_scores,t)
-    return Y_pred 
+    return Y_pred,Y_scores 
 
 def load_models_run_test(option,root,X,Y):
     path=root
@@ -90,32 +91,45 @@ def load_models_run_test(option,root,X,Y):
     if flag==1:
         clf2 = pickle.load(open(path + 'svm_' + option + '.pickle','rb'))
         return [clf2.best_estimator_]
-        
+     
     #Load SVM
     clf2 = pickle.load(open(path + 'svm_' + option + '.pickle','rb'))
     
     return [clf2.best_estimator_]
 
+def load_model(path):
+	clf=joblib.load(path)
+	return clf
 
 #Model1
 #DPC N5
 #AAC N5 
 
 Sequence=input('Enter the Sequence: ') 
-Model=input('choose model 1 / 2 Experimental/Random :') 
+Model=int(input('choose model 1 / 2 Experimental/Random :')) 
 Threshold=float(input('Enter the Threshold: '))
 
-if Model==1: 
-    root1='./ACPs and non-ACPS' 
-    X,Y=getXYforfeature(Sequence,'dpc','N',5,0) 
-    [clf]=load_models_run_test('dpc',root1,X,Y) 
-    Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
-    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',Y_pred,' | ','Score: ',Y_score)
+if Model==1:
+	root1='./ACPs and non-ACPS' 
+	X,Y=getXYforfeature(Sequence,'dpc','Normal',0,0) 
+	clf=load_model('dpc_extra_model') 
+	Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold)
+	flag=""
+	if Y_pred[0]==1:
+		flag='AntiCP'
+	else:
+		flag='Non AntiCP' 
+	print('Sequence: ', Sequence, ' | ' , 'Prediction: ',flag,' | ','Score: ',Y_score)
 
 else: 
     root1='./ACPs and random peptides' 
     X,Y=getXYforfeature(Sequence,'aac','Normal',0,0) 
-    [clf]=load_models_run_test('aac',root1,X,Y) 
+    clf=load_model('aac_extra_model') 
     Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
-    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',Y_pred,' | ','Score: ',Y_score)
+    flag=""
+    if Y_pred[0]==1:
+    	flag='AntiCP'
+    else:
+    	flag='Non AntiCP'
+    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',flag,' | ','Score: ',Y_score)
 
