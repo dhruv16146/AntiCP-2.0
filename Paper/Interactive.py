@@ -25,6 +25,7 @@ from sklearn.metrics import fbeta_score, make_scorer
 import os
 import sys
 import joblib
+from prettytable import PrettyTable
 warnings.filterwarnings('ignore')
 
 def getVector(line,option1,option2,x=None,y=None):
@@ -104,32 +105,45 @@ def load_model(path):
 #Model1
 #DPC N5
 #AAC N5 
+tabular = PrettyTable()
+tabular.field_names = ["Sequence", "Prediction", "Score"]
 
-Sequence=input('Enter the Sequence: ') 
+
+Sequence=input('Enter the Fasta File Name: ') 
 Model=int(input('choose model 1 / 2 Experimental/Random :')) 
 Threshold=float(input('Enter the Threshold: '))
 
+seqs=[]
+line=0
+f=open(Sequence,"r")
+for l in f:
+	if line%2==1:
+		seqs+=[l.strip()]
+	line+=1
+
+
 if Model==1:
 	root1='./ACPs and non-ACPS' 
-	X,Y=getXYforfeature(Sequence,'dpc','Normal',0,0) 
 	clf=load_model('dpc_extra_model') 
-	Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold)
-	flag=""
-	if Y_pred[0]==1:
-		flag='AntiCP'
-	else:
-		flag='Non AntiCP' 
-	print('Sequence: ', Sequence, ' | ' , 'Prediction: ',flag,' | ','Score: ',Y_score)
-
+	for Sequence in seqs:	
+		X,Y=getXYforfeature(Sequence,'dpc','Normal',0,0) 
+		Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold)
+		flag=""
+		if Y_pred[0]==1:
+			flag='AntiCP'
+		else:
+			flag='Non AntiCP' 
+		tabular.add_row([Sequence,flag,Y_score[0]])
 else: 
     root1='./ACPs and random peptides' 
-    X,Y=getXYforfeature(Sequence,'aac','Normal',0,0) 
     clf=load_model('aac_extra_model') 
-    Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
-    flag=""
-    if Y_pred[0]==1:
-    	flag='AntiCP'
-    else:
-    	flag='Non AntiCP'
-    print('Sequence: ', Sequence, ' | ' , 'Prediction: ',flag,' | ','Score: ',Y_score)
-
+    for Sequence in seqs:
+	    X,Y=getXYforfeature(Sequence,'aac','Normal',0,0) 
+	    Y_pred,Y_score=Perform_testing(clf,'svm',X,Y,Threshold) 
+	    flag=""
+	    if Y_pred[0]==1:
+	    	flag='AntiCP'
+	    else:
+	    	flag='Non AntiCP'
+	    tabular.add_row([Sequence,flag,Y_score[0]])
+print(tabular)
