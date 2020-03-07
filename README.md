@@ -1,7 +1,7 @@
 # AntiCancer_Peptides
 Our work on Anti Cancer Peptides
 
-##Instructions for Installation 
+## Instructions for Installation 
 ```bash
 git clone https://github.com/dhruv16146/AntiCancer_Peptides 
 ```
