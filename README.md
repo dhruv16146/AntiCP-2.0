@@ -20,5 +20,5 @@ bash Dependencies.bash
 python3 Interactive.py
 ```
 
-## Screenshot of the working gui
+## Interactive
 ![Screenshot](screenshot.png)
