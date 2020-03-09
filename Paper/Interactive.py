@@ -57,49 +57,9 @@ def Perform_testing(clf,name,X,Y,t):
     Y_pred = adjusted_classes(Y_scores,t)
     return Y_pred,Y_scores 
 
-def load_models_run_test(option,root,X,Y):
-    path=root
-    flag=0
-    if option=='aac':
-        path+='/aac_models/'
-    elif option[0:3]=='aac':
-        flag=1
-        path+='/aac_models/'
-    elif option=='dpc':
-        path+='/dpc_models/'
-    elif option[0:3]=='dpc':
-        flag=1
-        path+='/dpc_models/'
-    elif option=='bin_n5':
-        path+='/bin_n5_models/'
-    elif option=='bin_n10':
-        path+='/bin_n10_models/'
-    elif option=='bin_n15':
-        path+='/bin_n15_models/'
-    elif option=='bin_c5':
-        path+='/bin_c5_models/'
-    elif option=='bin_c10':
-        path+='/bin_c10_models/'
-    elif option=='bin_c15':
-        path+='/bin_c15_models/'
-    elif option=='bin_nc5':
-        path+='/bin_nc5_models/'
-    elif option=='bin_nc10':
-        path+='/bin_nc10_models/'
-    elif option=='bin_nc15':
-        path+='/bin_nc15_models/'
-    
-    if flag==1:
-        clf2 = pickle.load(open(path + 'svm_' + option + '.pickle','rb'))
-        return [clf2.best_estimator_]
-     
-    #Load SVM
-    clf2 = pickle.load(open(path + 'svm_' + option + '.pickle','rb'))
-    
-    return [clf2.best_estimator_]
-
 def load_model(path):
-	clf=joblib.load(path)
+	#clf=joblib.load(path)
+	clf = pickle.load(open(path,'rb'))
 	return clf
 
 #Model1
@@ -112,6 +72,7 @@ tabular.field_names = ["Sequence", "Prediction", "Score"]
 Sequence=input('Enter the Fasta File Name: ') 
 Model=int(input('choose model 1 / 2 Experimental/Random :')) 
 Threshold=float(input('Enter the Threshold: '))
+result_filename=input('Enter the File Name: ')
 
 seqs=[]
 line=0
@@ -121,7 +82,8 @@ for l in f:
 		seqs+=[l.strip()]
 	line+=1
 
-
+fout= open(result_filename,"w+")
+fout.write('Sequence,Prediction,Score\n')
 if Model==1:
 	root1='./ACPs and non-ACPS' 
 	clf=load_model('dpc_extra_model') 
@@ -134,6 +96,7 @@ if Model==1:
 		else:
 			flag='Non AntiCP' 
 		tabular.add_row([Sequence,flag,Y_score[0]])
+		fout.write(Sequence+","+flag+","+str(Y_score[0])+"\n")
 else: 
     root1='./ACPs and random peptides' 
     clf=load_model('aac_extra_model') 
@@ -146,4 +109,6 @@ else:
 	    else:
 	    	flag='Non AntiCP'
 	    tabular.add_row([Sequence,flag,Y_score[0]])
+	    fout.write(Sequence+","+flag+","+str(Y_score[0])+"\n")
 print(tabular)
+fout.close()
