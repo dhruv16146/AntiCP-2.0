@@ -29,7 +29,7 @@ bash Dependencies.bash
 Once all the dependencies are installed, user can proceed for the prediction. In order to predict the potency of the peptides user needs to run the command mentioned below. 
 
 ```bash
-python3 Interactive.py
+python3 AntiCP_2.0.py
 ```
 Once the command is run, code will ask user to input the name of file having its sequence in FASTA file format. Next, user needs to input the number of model of choice. '1' is for main dataset and '2' is for alternate dataset. Next, user needs to provide threshold value for prediction. This range varies in between 0-1. Once all these inputs are provided, software will predict the output and provides the result whether the peptide is AntiCP or Non-AntiCP along with the prediction score. Example of Input file is provided by the name of "sample.fasta" and screenshot of output is also shown below.
 
