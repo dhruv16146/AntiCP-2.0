@@ -69,10 +69,10 @@ tabular = PrettyTable()
 tabular.field_names = ["Sequence", "Prediction", "Score"]
 
 
-Sequence=input('Enter the Fasta File Name: ') 
+Sequence=input('Enter the Input Fasta File Name: ') 
 Model=int(input('choose model 1 / 2 Experimental/Random :')) 
 Threshold=float(input('Enter the Threshold: '))
-result_filename=input('Enter the File Name: ')
+result_filename=input('Enter the Output File Name: ')
 
 seqs=[]
 line=0
