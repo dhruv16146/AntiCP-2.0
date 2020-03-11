@@ -8,9 +8,9 @@ We also benchmarked our method with previous methods and found that our method b
 User can install the software using the command mentioned below:
 
 ```bash
-git clone https://github.com/dhruv16146/AntiCancer_Peptides 
+git clone https://github.com/dhruv16146/AntiCP-2.0
 ```
-Once the zip code is downlaoded, user needs to enter the folder named "src" by typing the command as shown below:
+Once the zip code is downloaded, user needs to enter the folder named "src" by typing the command as shown below:
 
 ```bash
 cd src
